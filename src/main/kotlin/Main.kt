@@ -1,26 +1,26 @@
 import FileManager.deleteAllFiles
 
+val repository = ExerciseRepository()
 
 fun main() {
     val path = deleteAllFiles()
-    val repository = ExerciseRepository()
 
-    // Русский язык
     val exerciseListRus = repository.getRusExercises()
-
-    // English language
     val exerciseListEn = repository.getEnExercises()
+
+    val exerciseRus = Exercise("Скобки", exerciseListRus)
+    val exerciseEn = Exercise("Capital letters", exerciseListEn)
 
 
     println("Русский язык")
-    exerciseListRus.forEachIndexed { index, content ->
-        FileManager.createFile(path, "Упражнение - $index (${content.substring(0, 10)})", content)
+    exerciseRus.list.forEachIndexed { index, content ->
+        FileManager.createFile(path, "Упражнение (${exerciseRus.name}-$index)", content)
         println(content)
     }
     println()
     println("English language")
-    exerciseListEn.forEachIndexed { index, content ->
-        FileManager.createFile(path, "Exercise - $index (${content.substring(0, 10)})", content)
+    exerciseEn.list.forEachIndexed { index, content ->
+        FileManager.createFile(path, "Exercise (${exerciseEn.name}-$index)", content)
         println(content)
     }
 }
