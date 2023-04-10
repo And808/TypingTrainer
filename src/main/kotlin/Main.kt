@@ -8,5 +8,5 @@ fun main() {
     println()
     println("English language")
     repository.createOneHundredEnExercise()
-    repository.createEnExercises(Exercise("Capital letters", repository.getEnExercises()))
+    repository.createEnExercises(Exercise("Capital letters", repository.getCapitalLettersEnExercises()))
 }

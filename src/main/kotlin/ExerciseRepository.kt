@@ -67,29 +67,8 @@ class ExerciseRepository {
                 getAbracadabraWithPrefixAndPostfix("1234567890", length = 200)
     }
 
-//fun List<String>.toText2(length: String): String {
-//    val text = ""
-//
-//    this.forEach {
-//        text += it
-//    }
-//    return text
-//}
-
     fun List<String>.shuffledText(): String {
         return this
-            .shuffled()
-            .take(22)
-            .joinToString(" ")
-    }
-
-    fun String.withPrefix(prefix: String) = "$prefix$this"
-
-    fun String.withPostfix(postfix: String) = "$this$postfix"
-
-    private fun getShuffledWords(text: String): String {
-        return text
-            .split(" ")
             .shuffled()
             .take(22)
             .joinToString(" ")
@@ -121,7 +100,7 @@ class ExerciseRepository {
         )
     }
 
-    fun getEnExercises(): List<String> {
+    fun getCapitalLettersEnExercises(): List<String> {
         val list = mutableListOf<String>()
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN.uppercase()))
