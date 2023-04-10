@@ -14,7 +14,7 @@ class ExerciseRepository {
         deleteAllFiles()
     }
 
-    private fun String.randomLetter() = this[Random.nextInt(0, this.length)]
+    private fun String.randomSymbol() = this[Random.nextInt(this.length)]
 
     private fun getRepeatedString(pattern: String, length: Int = 100): String {
         return pattern.repeat((length + pattern.length) / pattern.length).substring(0, length)
@@ -23,7 +23,7 @@ class ExerciseRepository {
     private fun getAbracadabra(symbols: String, length: Int = 100): String {
         var text = ""
         while (text.length < length) {
-            text += "${symbols[Random.nextInt(symbols.length)]}"
+            text += "${symbols.randomSymbol()}"
         }
         return text
     }
@@ -33,7 +33,7 @@ class ExerciseRepository {
     ): String {
         var text = ""
         while (text.length < length) {
-            val randomLetter = letters.randomLetter()
+            val randomLetter = letters.randomSymbol()
             val randomPrefix = prefixes.randomOrNull().orEmpty()
             val randomPostfix = postfixes.randomOrNull().orEmpty()
             text += "$randomPrefix$randomLetter$randomPostfix"
@@ -92,7 +92,7 @@ class ExerciseRepository {
         )
     }
 
-    fun createExercises(exerciseRus: Exercise) {
+    fun createExercise(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
             FileManager.createFile("${exerciseRus.name}-$index", content)
             println(content)
