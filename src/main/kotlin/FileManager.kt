@@ -14,5 +14,5 @@ object FileManager {
         file.writeText(content, charset = Charsets.UTF_16)
     }
 
-    fun readDictionaryFromFile(fileName: String) = File(fileName).useLines { it.toList() }
+    fun readLines(fileName: String) = File(fileName).useLines { it.toList() }
 }

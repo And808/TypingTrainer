@@ -1,13 +1,13 @@
 import FileManager.deleteAllFiles
-import FileManager.readDictionaryFromFile
+import FileManager.readLines
 import StringExt.randomSymbol
 
 class ExerciseRepository {
 
     private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
     private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
-    private val oneHundredDictionaryRus = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
-    private val oneHundredDictionaryEn = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
+    private val oneHundredDictionaryRus = readLines("src/main/kotlin/dictionaries/Соточка.txt")
+    private val oneHundredDictionaryEn = readLines("src/main/kotlin/dictionaries/OneHundred.txt")
 
     var language: Language = Language.RUS
 
@@ -99,6 +99,18 @@ class ExerciseRepository {
             FileManager.createFile(fileName, content)
             println(content)
         }
+    }
+
+    fun createExercise(name: String) {
+        val lines = readLines("src/main/kotlin/dictionaries/ExercisesRus.txt")
+        val list = lines.takeLastWhile { it != name }.takeWhile { it.length > 30 }
+        val exercise = Exercise(name, list)
+
+        list.forEachIndexed { index, content ->
+            val fileName = if (list.size > 1) "$name-$index" else name
+            FileManager.createFile(fileName, content)
+        }
+        println(exercise)
     }
 
     private fun getExerciseName(type: ExerciseType): String {

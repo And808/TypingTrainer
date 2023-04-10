@@ -5,6 +5,7 @@ fun main() {
     repository.language = Language.RUS
     repository.createExercise(ExerciseType.ONE_HUNDRED)
     repository.createExercise(ExerciseType.BRACKETS)
+//    repository.createExercise("Кавычки")
 
     println()
     println("English language")
