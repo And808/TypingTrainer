@@ -2,15 +2,15 @@ import java.io.File
 import java.util.*
 
 object FileManager {
+    private const val PATH = """C:\Users\user\Documents\AMi_1.6.1.0\users\Ъ\texts\"""
 
     fun deleteAllFiles(): String {
-        val path = """C:\Users\user\Documents\AMi_1.6.1.0\users\Ъ\texts\"""
-        Arrays.stream(File(path).listFiles()).forEach(File::delete)
-        return path
+        Arrays.stream(File(PATH).listFiles()).forEach(File::delete)
+        return PATH
     }
 
-    fun createFile(folder: String, name: String, content: String) {
-        val file = File("$folder$name.txt")
+    fun createFile(name: String, content: String) {
+        val file = File("$PATH$name.txt")
         file.writeText(content, charset = Charsets.UTF_16)
     }
 

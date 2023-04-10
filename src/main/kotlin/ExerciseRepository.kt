@@ -1,7 +1,12 @@
+import FileManager.deleteAllFiles
 import FileManager.readDictionaryFromFile
 import kotlin.random.Random
 
 class ExerciseRepository {
+
+    init {
+        deleteAllFiles()
+    }
 
     private val RIGHT_HAND_CAPITAL_LETTERS_RUS = Companion.RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
     private val LEFT_HAND_CAPITAL_LETTERS_RUS =
@@ -116,6 +121,20 @@ class ExerciseRepository {
         list.add(ONE_HUNDRED_EN.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
         list.add(ONE_HUNDRED_EN.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
         return list
+    }
+
+    fun saveRusExercises(exerciseRus: Exercise) {
+        exerciseRus.list.forEachIndexed { index, content ->
+            FileManager.createFile( "Упражнение (${exerciseRus.name}-$index)", content)
+            println(content)
+        }
+    }
+
+    fun saveEnExercises(exerciseRus: Exercise) {
+        exerciseRus.list.forEachIndexed { index, content ->
+            FileManager.createFile( "Exercise (${exerciseRus.name}-$index)", content)
+            println(content)
+        }
     }
 
     companion object {
