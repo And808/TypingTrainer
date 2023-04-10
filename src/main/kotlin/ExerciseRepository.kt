@@ -74,14 +74,6 @@ class ExerciseRepository {
             .joinToString(" ")
     }
 
-    fun getCapitalLettersExercise(text: String): String {
-        return text
-            .split(" ")
-            .shuffled()
-            .take(30)
-            .joinToString(" ") { it.replaceFirstChar { it.uppercase() } }
-    }
-
     private fun getOneHundredExercise(dictionary: List<String>): String {
         var text = ""
         while (text.length < 100) {
@@ -92,11 +84,12 @@ class ExerciseRepository {
 
     fun getRusBracketExercises(): List<String> {
         val length = 100
+        val symbols = "()"
         return listOf(
-            "(".repeat(length),
-            ")".repeat(length),
-            getAbracadabra("()", length),
-            oneHundredDictionaryRus.shuffled().take(20).joinToString(" ") { "(${it})" }
+            symbols[0].toString().repeat(length),
+            symbols[1].toString().repeat(length),
+            getAbracadabra(symbols, length),
+            oneHundredDictionaryRus.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
         )
     }
 
