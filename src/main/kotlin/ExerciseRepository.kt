@@ -123,14 +123,14 @@ class ExerciseRepository {
         return list
     }
 
-    fun saveRusExercises(exerciseRus: Exercise) {
+    fun createRusExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
             FileManager.createFile( "Упражнение (${exerciseRus.name}-$index)", content)
             println(content)
         }
     }
 
-    fun saveEnExercises(exerciseRus: Exercise) {
+    fun createEnExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
             FileManager.createFile( "Exercise (${exerciseRus.name}-$index)", content)
             println(content)
