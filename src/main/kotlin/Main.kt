@@ -30,11 +30,6 @@ var language = Language.RUS
 
 fun String.randomLetter() = this[Random.nextInt(0, this.length)]
 
-fun createFile(folder: String, name: String, content: String) {
-    val file = File("$folder$name.txt")
-    file.writeText(content, charset = Charsets.UTF_16)
-}
-
 fun getRepeatedString(pattern: String, length: Int = 100): String {
     return pattern.repeat((length + pattern.length) / pattern.length).substring(0, length)
 }
@@ -143,13 +138,13 @@ fun main() {
 
     println("Русский язык")
     exerciseListRus.forEachIndexed { index, content ->
-        createFile(path, "Упражнение - $index (${content.substring(0, 10)})", content)
+        FileManager.createFile(path, "Упражнение - $index (${content.substring(0, 10)})", content)
         println(content)
     }
     println()
     println("English language")
     exerciseListEn.forEachIndexed { index, content ->
-        createFile(path, "Exercise - $index (${content.substring(0, 10)})", content)
+        FileManager.createFile(path, "Exercise - $index (${content.substring(0, 10)})", content)
         println(content)
     }
 }
