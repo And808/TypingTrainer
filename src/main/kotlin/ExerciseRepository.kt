@@ -8,9 +8,8 @@ class ExerciseRepository {
         deleteAllFiles()
     }
 
-    private val RIGHT_HAND_CAPITAL_LETTERS_RUS = Companion.RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
-    private val LEFT_HAND_CAPITAL_LETTERS_RUS =
-        Companion.LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
+    private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
+    private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
 
     private val ONE_HUNDRED_RUS = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt").shuffled()
     private val ONE_HUNDRED_EN = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt").shuffled()
@@ -21,7 +20,7 @@ class ExerciseRepository {
         return pattern.repeat((length + pattern.length) / pattern.length).substring(0, length)
     }
 
-    fun getAbracadabraWithPrefixAndPostfix(
+    private fun getAbracadabraWithPrefixAndPostfix(
         letters: String, prefixes: List<String> = listOf(), postfixes: List<String> = listOf(), length: Int = 100
     ): String {
         var text = ""
@@ -34,7 +33,7 @@ class ExerciseRepository {
         return text
     }
 
-    fun getPatternExercises(symbols: String): List<String> {
+    private fun getPatternExercises(symbols: String): List<String> {
         val list = mutableListOf<String>()
         symbols.map { it.toString() }.forEach { list.add(getRepeatedString(it, length = 100)) }
         list.add(getAbracadabraWithPrefixAndPostfix(symbols, length = 200))
@@ -45,8 +44,8 @@ class ExerciseRepository {
     fun getSpaceExercise(): List<String> {
         return listOf(
             getAbracadabraWithPrefixAndPostfix(Companion.RIGHT_HAND_LETTERS_EN, postfixes = listOf(" "), length = 300),
-            getAbracadabraWithPrefixAndPostfix(Companion.LEFT_HAND_LETTERS_EN, postfixes = listOf(" "), length = 300),
-            getAbracadabraWithPrefixAndPostfix(Companion.ALPHABET_EN, postfixes = listOf(" "), length = 300)
+            getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN, postfixes = listOf(" "), length = 300),
+            getAbracadabraWithPrefixAndPostfix(ALPHABET_EN, postfixes = listOf(" "), length = 300)
         )
     }
 
@@ -69,7 +68,7 @@ class ExerciseRepository {
 //    return text
 //}
 
-    fun List<String>.shuffledText(length: Int = 100): String {
+    fun List<String>.shuffledText(): String {
         return this
             .shuffled()
             .take(22)
@@ -80,7 +79,7 @@ class ExerciseRepository {
 
     fun String.withPostfix(postfix: String) = "$this$postfix"
 
-    public fun getShuffledWords(text: String): String {
+    private fun getShuffledWords(text: String): String {
         return text
             .split(" ")
             .shuffled()
@@ -96,7 +95,7 @@ class ExerciseRepository {
             .joinToString(" ") { it.replaceFirstChar { it.uppercase() } }
     }
 
-    public fun getRusExercises(): List<String> {
+    fun getRusExercises(): List<String> {
         val list = mutableListOf<String>()
         list.add(ONE_HUNDRED_RUS.shuffledText())
         list.add(getAbracadabraWithPrefixAndPostfix("("))
@@ -111,7 +110,7 @@ class ExerciseRepository {
         return list
     }
 
-    public fun getEnExercises(): List<String> {
+    fun getEnExercises(): List<String> {
         val list = mutableListOf<String>()
         list.add(ONE_HUNDRED_EN.shuffledText())
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
@@ -125,14 +124,14 @@ class ExerciseRepository {
 
     fun createRusExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
-            FileManager.createFile( "Упражнение (${exerciseRus.name}-$index)", content)
+            FileManager.createFile("Упражнение (${exerciseRus.name}-$index)", content)
             println(content)
         }
     }
 
     fun createEnExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
-            FileManager.createFile( "Exercise (${exerciseRus.name}-$index)", content)
+            FileManager.createFile("Exercise (${exerciseRus.name}-$index)", content)
             println(content)
         }
     }
