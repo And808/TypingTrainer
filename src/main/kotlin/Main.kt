@@ -1,10 +1,8 @@
-import java.io.File
-import java.util.*
+import FileManager.deleteAllFiles
 
 
 fun main() {
-    val path = """C:\Users\user\Documents\AMi_1.6.1.0\users\Ъ\texts\"""
-    Arrays.stream(File(path).listFiles()).forEach(File::delete)
+    val path = deleteAllFiles()
     val repository = ExerciseRepository()
 
     // Русский язык
