@@ -82,26 +82,14 @@ class ExerciseRepository {
         return text.dropLast(1)
     }
 
-    fun getBracketExercisesRus(): List<String> {
-        val length = 100
-        val symbols = "()"
+    fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
+        val dictionary = if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
         return listOf(
-            symbols[0].toString().repeat(length),
-            symbols[1].toString().repeat(length),
-            getAbracadabra(symbols, length),
-            oneHundredDictionaryRus.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
+            symbols[0].toString().repeat(100),
+            symbols[1].toString().repeat(100),
+            getAbracadabra(symbols, 100),
+            dictionary.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
         )
-    }
-
-    fun getSquareBracketsExercisesEn(): List<String> {
-        val list = mutableListOf<String>()
-        list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
-        list.add(getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN.uppercase()))
-        list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase() + LEFT_HAND_LETTERS_EN.uppercase()))
-        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        return list
     }
 
     fun createExercises(exerciseRus: Exercise) {
