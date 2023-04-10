@@ -1,3 +1,4 @@
+import FileManager.readDictionaryFromFile
 import kotlin.random.Random
 
 class ExerciseRepository {
@@ -6,14 +7,8 @@ class ExerciseRepository {
     private val LEFT_HAND_CAPITAL_LETTERS_RUS =
         Companion.LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
 
-    private val ONE_HUNDRED_RUS =
-        "и в не на я быть он с что а по это она этот к но они мы как из у который то за свой что весь год от так о для ты же все тот мочь вы человек такой его сказать только или ещё бы себя один как уже до время если сам когда другой вот говорить наш мой знать стать при чтобы дело жизнь кто первый очень два день её новый рука даже во со раз где там под можно ну какой после их работа без самый потом надо хотеть ли слово идти большой должен место иметь ничто".split(
-            " "
-        ).shuffled()
-    val ONE_HUNDRED_EN =
-        "the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would there their what so up out if about who get which go me when make can like time no just him know take person into year your good some could them see other than then now look only come its over think also back after use two how our work first well way even new want because any these give day most us".split(
-            " "
-        ).shuffled()
+    private val ONE_HUNDRED_RUS = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
+    private val ONE_HUNDRED_EN = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
 
     private fun String.randomLetter() = this[Random.nextInt(0, this.length)]
 
