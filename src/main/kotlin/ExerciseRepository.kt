@@ -1,6 +1,6 @@
 import FileManager.deleteAllFiles
 import FileManager.readDictionaryFromFile
-import kotlin.random.Random
+import StringExt.randomSymbol
 
 class ExerciseRepository {
 
@@ -13,8 +13,6 @@ class ExerciseRepository {
     init {
         deleteAllFiles()
     }
-
-    private fun String.randomSymbol() = this[Random.nextInt(this.length)]
 
     private fun getRepeatedString(pattern: String, length: Int = 100): String {
         return pattern.repeat((length + pattern.length) / pattern.length).substring(0, length)
