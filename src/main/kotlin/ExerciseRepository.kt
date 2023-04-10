@@ -95,10 +95,25 @@ class ExerciseRepository {
         )
     }
 
-    fun createExercise(exerciseRus: Exercise) {
-        exerciseRus.list.forEachIndexed { index, content ->
-            FileManager.createFile("${exerciseRus.name}-$index", content)
+    fun createExercise(type: ExerciseType) {
+        val name = getExerciseName(type)
+        val exercise = when (type) {
+            ExerciseType.BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("()", language))
+            ExerciseType.SQUARE_BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
+            ExerciseType.CURLY_BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
+        }
+
+        exercise.list.forEachIndexed { index, content ->
+            FileManager.createFile("$name-$index", content)
             println(content)
+        }
+    }
+
+    private fun getExerciseName(type: ExerciseType): String {
+        return when (type) {
+            ExerciseType.BRACKETS -> "Скобки"
+            ExerciseType.SQUARE_BRACKETS -> "Квадратные скобки"
+            ExerciseType.CURLY_BRACKETS -> "Фигурные скобки"
         }
     }
 
