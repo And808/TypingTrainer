@@ -66,23 +66,13 @@ class ExerciseRepository {
                 getAbracadabraWithPrefixAndPostfix("1234567890", length = 200)
     }
 
-    fun List<String>.shuffledText(): String {
-        return this
-            .shuffled()
-            .take(22)
-            .joinToString(" ")
-    }
-
-    private fun getOneHundredExercise(dictionary: List<String>): String {
+    private fun getOneHundredExercise(language: Language): List<String> {
+        val dictionary = if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
         var text = ""
         while (text.length < 100) {
             text += "${dictionary.random()} "
         }
-        return text.dropLast(1)
-    }
-
-    private fun getOneHundredDictionary(language: Language): List<String> {
-        return if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
+        return listOf(text.dropLast(1))
     }
 
     fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
@@ -98,28 +88,26 @@ class ExerciseRepository {
     fun createExercise(type: ExerciseType) {
         val name = getExerciseName(type)
         val exercise = when (type) {
+            ExerciseType.ONE_HUNDRED -> Exercise(name, repository.getOneHundredExercise(language))
             ExerciseType.BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("()", language))
             ExerciseType.SQUARE_BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
             ExerciseType.CURLY_BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
         }
 
         exercise.list.forEachIndexed { index, content ->
-            FileManager.createFile("$name-$index", content)
+            val fileName = if (exercise.list.size > 1) "$name-$index" else name
+            FileManager.createFile(fileName, content)
             println(content)
         }
     }
 
     private fun getExerciseName(type: ExerciseType): String {
         return when (type) {
+            ExerciseType.ONE_HUNDRED -> if (language === Language.RUS) "Соточка" else "OneHundred"
             ExerciseType.BRACKETS -> "Скобки"
             ExerciseType.SQUARE_BRACKETS -> "Квадратные скобки"
             ExerciseType.CURLY_BRACKETS -> "Фигурные скобки"
         }
-    }
-
-    fun createOneHundredExercise() {
-        val name = if (language === Language.RUS) "Соточка" else "OneHundred"
-        FileManager.createFile(name, getOneHundredExercise(getOneHundredDictionary(language)))
     }
 
     companion object {
