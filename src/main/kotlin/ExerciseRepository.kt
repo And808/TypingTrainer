@@ -82,7 +82,7 @@ class ExerciseRepository {
         return text.dropLast(1)
     }
 
-    fun getRusBracketExercises(): List<String> {
+    fun getBracketExercisesRus(): List<String> {
         val length = 100
         val symbols = "()"
         return listOf(
@@ -93,7 +93,7 @@ class ExerciseRepository {
         )
     }
 
-    fun getCapitalLettersEnExercises(): List<String> {
+    fun getSquareBracketsExercisesEn(): List<String> {
         val list = mutableListOf<String>()
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN.uppercase()))
