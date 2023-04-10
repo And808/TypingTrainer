@@ -6,9 +6,10 @@ class ExerciseRepository {
 
     private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
     private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
-
     private val oneHundredDictionaryRus = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
     private val oneHundredDictionaryEn = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
+
+    var language: Language = Language.RUS
 
     init {
         deleteAllFiles()
@@ -80,6 +81,10 @@ class ExerciseRepository {
         return text.dropLast(1)
     }
 
+    private fun getOneHundredDictionary(language: Language): List<String> {
+        return if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
+    }
+
     fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
         val dictionary = if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
         return listOf(
@@ -97,11 +102,10 @@ class ExerciseRepository {
         }
     }
 
-    fun createOneHundredRusExercise() =
-        FileManager.createFile("Соточка", getOneHundredExercise(oneHundredDictionaryRus))
-
-    fun createOneHundredEnExercise() =
-        FileManager.createFile("OneHundred", getOneHundredExercise(oneHundredDictionaryEn))
+    fun createOneHundredExercise() {
+        val name = if (language === Language.RUS) "Соточка" else "OneHundred"
+        FileManager.createFile(name, getOneHundredExercise(getOneHundredDictionary(language)))
+    }
 
     companion object {
         private const val RIGHT_HAND_LETTERS_RUS = "йцукефывапячсми"
