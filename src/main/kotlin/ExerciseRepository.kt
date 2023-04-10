@@ -4,15 +4,15 @@ import kotlin.random.Random
 
 class ExerciseRepository {
 
-    init {
-        deleteAllFiles()
-    }
-
     private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
     private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
 
-    private val ONE_HUNDRED_RUS = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt").shuffled()
-    private val ONE_HUNDRED_EN = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt").shuffled()
+    private val oneHundredRus = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
+    private val oneHundredEn = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
+
+    init {
+        deleteAllFiles()
+    }
 
     private fun String.randomLetter() = this[Random.nextInt(0, this.length)]
 
@@ -95,30 +95,36 @@ class ExerciseRepository {
             .joinToString(" ") { it.replaceFirstChar { it.uppercase() } }
     }
 
+    private fun getOneHundredExercise(dictionary: List<String>): String {
+        var text = ""
+        while (text.length < 100) {
+            text += "${dictionary.random()} "
+        }
+        return text.dropLast(1)
+    }
+
     fun getRusExercises(): List<String> {
         val list = mutableListOf<String>()
-        list.add(ONE_HUNDRED_RUS.shuffledText())
         list.add(getAbracadabraWithPrefixAndPostfix("("))
         list.add(getAbracadabraWithPrefixAndPostfix(")"))
         list.add(getAbracadabraWithPrefixAndPostfix("()"))
-        list.add(getShuffledWords(ONE_HUNDRED_RUS.map { it.withPrefix("(") }.map { it.withPostfix(")") }
+        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
             .shuffledText()))
-        list.add(getShuffledWords(ONE_HUNDRED_RUS.map { it.withPrefix("(") }.map { it.withPostfix(")") }
+        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
             .shuffledText()))
-        list.add(getShuffledWords(ONE_HUNDRED_RUS.map { it.withPrefix("(") }.map { it.withPostfix(")") }
+        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
             .shuffledText()))
         return list
     }
 
     fun getEnExercises(): List<String> {
         val list = mutableListOf<String>()
-        list.add(ONE_HUNDRED_EN.shuffledText())
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase() + LEFT_HAND_LETTERS_EN.uppercase()))
-        list.add(ONE_HUNDRED_EN.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(ONE_HUNDRED_EN.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(ONE_HUNDRED_EN.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
         return list
     }
 
@@ -128,6 +134,10 @@ class ExerciseRepository {
             println(content)
         }
     }
+
+    fun createOneHundredRusExercise() = FileManager.createFile("Соточка", getOneHundredExercise(oneHundredRus))
+
+    fun createOneHundredEnExercise() = FileManager.createFile("OneHundred", getOneHundredExercise(oneHundredEn))
 
     fun createEnExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
