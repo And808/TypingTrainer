@@ -3,7 +3,7 @@ val repository = ExerciseRepository()
 fun main() {
     println("Русский язык")
     repository.createOneHundredRusExercise()
-    repository.createRusExercises(Exercise("Скобки", repository.getRusExercises()))
+    repository.createRusExercises(Exercise("Скобки", repository.getRusBracketExercises()))
 
     println()
     println("English language")

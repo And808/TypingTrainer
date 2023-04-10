@@ -7,8 +7,8 @@ class ExerciseRepository {
     private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
     private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
 
-    private val oneHundredRus = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
-    private val oneHundredEn = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
+    private val oneHundredDictionaryRus = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
+    private val oneHundredDictionaryEn = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
 
     init {
         deleteAllFiles()
@@ -18,6 +18,14 @@ class ExerciseRepository {
 
     private fun getRepeatedString(pattern: String, length: Int = 100): String {
         return pattern.repeat((length + pattern.length) / pattern.length).substring(0, length)
+    }
+
+    private fun getAbracadabra(symbols: String, length: Int = 100): String {
+        var text = ""
+        while (text.length < length) {
+            text += "${symbols[Random.nextInt(symbols.length)]}"
+        }
+        return text
     }
 
     private fun getAbracadabraWithPrefixAndPostfix(
@@ -103,18 +111,14 @@ class ExerciseRepository {
         return text.dropLast(1)
     }
 
-    fun getRusExercises(): List<String> {
-        val list = mutableListOf<String>()
-        list.add(getAbracadabraWithPrefixAndPostfix("("))
-        list.add(getAbracadabraWithPrefixAndPostfix(")"))
-        list.add(getAbracadabraWithPrefixAndPostfix("()"))
-        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
-            .shuffledText()))
-        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
-            .shuffledText()))
-        list.add(getShuffledWords(oneHundredRus.map { it.withPrefix("(") }.map { it.withPostfix(")") }
-            .shuffledText()))
-        return list
+    fun getRusBracketExercises(): List<String> {
+        val length = 100
+        return listOf(
+            "(".repeat(length),
+            ")".repeat(length),
+            getAbracadabra("()", length),
+            oneHundredDictionaryRus.shuffled().take(20).joinToString(" ") { "(${it})" }
+        )
     }
 
     fun getEnExercises(): List<String> {
@@ -122,9 +126,9 @@ class ExerciseRepository {
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(LEFT_HAND_LETTERS_EN.uppercase()))
         list.add(getAbracadabraWithPrefixAndPostfix(RIGHT_HAND_LETTERS_EN.uppercase() + LEFT_HAND_LETTERS_EN.uppercase()))
-        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
-        list.add(oneHundredEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
+        list.add(oneHundredDictionaryEn.map { it.replaceFirstChar { it.uppercase() } }.shuffledText())
         return list
     }
 
@@ -135,9 +139,11 @@ class ExerciseRepository {
         }
     }
 
-    fun createOneHundredRusExercise() = FileManager.createFile("Соточка", getOneHundredExercise(oneHundredRus))
+    fun createOneHundredRusExercise() =
+        FileManager.createFile("Соточка", getOneHundredExercise(oneHundredDictionaryRus))
 
-    fun createOneHundredEnExercise() = FileManager.createFile("OneHundred", getOneHundredExercise(oneHundredEn))
+    fun createOneHundredEnExercise() =
+        FileManager.createFile("OneHundred", getOneHundredExercise(oneHundredDictionaryEn))
 
     fun createEnExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
