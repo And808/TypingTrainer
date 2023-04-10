@@ -111,9 +111,9 @@ class ExerciseRepository {
         return list
     }
 
-    fun createRusExercises(exerciseRus: Exercise) {
+    fun createExercises(exerciseRus: Exercise) {
         exerciseRus.list.forEachIndexed { index, content ->
-            FileManager.createFile("Упражнение (${exerciseRus.name}-$index)", content)
+            FileManager.createFile("${exerciseRus.name}-$index", content)
             println(content)
         }
     }
@@ -123,13 +123,6 @@ class ExerciseRepository {
 
     fun createOneHundredEnExercise() =
         FileManager.createFile("OneHundred", getOneHundredExercise(oneHundredDictionaryEn))
-
-    fun createEnExercises(exerciseRus: Exercise) {
-        exerciseRus.list.forEachIndexed { index, content ->
-            FileManager.createFile("Exercise (${exerciseRus.name}-$index)", content)
-            println(content)
-        }
-    }
 
     companion object {
         private const val RIGHT_HAND_LETTERS_RUS = "йцукефывапячсми"
