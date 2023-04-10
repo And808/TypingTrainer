@@ -7,8 +7,8 @@ class ExerciseRepository {
     private val LEFT_HAND_CAPITAL_LETTERS_RUS =
         Companion.LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
 
-    private val ONE_HUNDRED_RUS = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt")
-    private val ONE_HUNDRED_EN = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt")
+    private val ONE_HUNDRED_RUS = readDictionaryFromFile("src/main/kotlin/dictionaries/Соточка.txt").shuffled()
+    private val ONE_HUNDRED_EN = readDictionaryFromFile("src/main/kotlin/dictionaries/OneHundred.txt").shuffled()
 
     private fun String.randomLetter() = this[Random.nextInt(0, this.length)]
 
