@@ -101,7 +101,7 @@ class ExerciseRepository {
         }
     }
 
-    fun createExercise(name: String) {
+    fun createExerciseFromFile(name: String) {
         val lines = readLines("src/main/kotlin/dictionaries/ExercisesRus.txt")
         val list = lines.takeLastWhile { it != name }.takeWhile { it.length > 30 }
         val exercise = Exercise(name, list)

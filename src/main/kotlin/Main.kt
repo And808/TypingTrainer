@@ -4,8 +4,8 @@ fun main() {
     println("Русский язык")
     repository.language = Language.RUS
     repository.createExercise(ExerciseType.ONE_HUNDRED)
-    repository.createExercise("()")
-    repository.createExercise("Кавычки")
+    repository.createExerciseFromFile("()")
+    repository.createExerciseFromFile("Кавычки")
 
     println()
     println("English language")
