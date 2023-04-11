@@ -10,5 +10,5 @@ fun main() {
     println("English language")
     repository.language = Language.EN
     repository.createExercise(ExerciseType.ONE_HUNDRED)
-    repository.createExercise(ExerciseType.SQUARE_BRACKETS)
+    repository.createExercise("()")
 }

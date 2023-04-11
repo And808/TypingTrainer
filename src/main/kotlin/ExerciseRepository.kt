@@ -9,6 +9,7 @@ class ExerciseRepository {
     private val oneHundredDictionaryRus = readLines("src/main/kotlin/dictionaries/Соточка.txt")
     private val oneHundredDictionaryEn = readLines("src/main/kotlin/dictionaries/OneHundred.txt")
     private val dictionary5000Rus = readLines("src/main/kotlin/dictionaries/Частотный словарь 5000.txt")
+    private val dictionary5000En = readLines("src/main/kotlin/dictionaries/Frequency dictionary 5000.txt")
 
     var language: Language = Language.RUS
 
@@ -77,7 +78,7 @@ class ExerciseRepository {
     }
 
     fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
-        val dictionary = if (language === Language.RUS) dictionary5000Rus else oneHundredDictionaryEn
+        val dictionary = if (language === Language.RUS) dictionary5000Rus else dictionary5000En
         return listOf(
             symbols[0].toString().repeat(50) + symbols[1].toString().repeat(50),
             getAbracadabra(symbols, 100),
