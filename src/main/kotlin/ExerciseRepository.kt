@@ -8,6 +8,7 @@ class ExerciseRepository {
     private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
     private val oneHundredDictionaryRus = readLines("src/main/kotlin/dictionaries/Соточка.txt")
     private val oneHundredDictionaryEn = readLines("src/main/kotlin/dictionaries/OneHundred.txt")
+    private val dictionary5000Rus = readLines("src/main/kotlin/dictionaries/Частотный словарь 5000.txt")
 
     var language: Language = Language.RUS
 
@@ -76,12 +77,11 @@ class ExerciseRepository {
     }
 
     fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
-        val dictionary = if (language === Language.RUS) oneHundredDictionaryRus else oneHundredDictionaryEn
+        val dictionary = if (language === Language.RUS) dictionary5000Rus else oneHundredDictionaryEn
         return listOf(
-            symbols[0].toString().repeat(100),
-            symbols[1].toString().repeat(100),
+            symbols[0].toString().repeat(50) + symbols[1].toString().repeat(50),
             getAbracadabra(symbols, 100),
-            dictionary.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
+            dictionary.filter { it.length <= 3 }.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
         )
     }
 
