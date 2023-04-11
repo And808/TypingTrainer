@@ -94,6 +94,23 @@ class ExerciseRepository {
             ExerciseType.CURLY_BRACKETS -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
         }
 
+        val languageString = if (language === Language.RUS) "Упражнение" else "Exercise"
+        exercise.list.forEachIndexed { index, content ->
+            val fileName = if (exercise.list.size > 1) "$languageString $name-$index" else name
+            FileManager.createFile(fileName, content)
+            println(content)
+        }
+    }
+
+    fun createExercise(name: String) {
+        val exercise = when (name) {
+            "Соточка" -> Exercise(name, repository.getOneHundredExercise(language))
+            "()" -> Exercise(name, repository.getPairedSymbolsExercise("()", language))
+            "[]" -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
+            "{}" -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
+            else -> Exercise("", emptyList())
+        }
+
         exercise.list.forEachIndexed { index, content ->
             val fileName = if (exercise.list.size > 1) "$name-$index" else name
             FileManager.createFile(fileName, content)
