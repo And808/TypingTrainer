@@ -106,6 +106,7 @@ class ExerciseRepository {
     fun createExercise(name: String) {
         val exercise = when (name) {
             "Соточка" -> Exercise(name, repository.getOneHundredExercise(language))
+            "Кавычки" -> Exercise(name, repository.getPairedSymbolsExercise("\"\"", language))
             "()" -> Exercise(name, repository.getPairedSymbolsExercise("()", language))
             "[]" -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
             "{}" -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
