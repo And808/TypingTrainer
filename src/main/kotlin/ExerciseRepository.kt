@@ -82,7 +82,11 @@ class ExerciseRepository {
         return listOf(
             symbols[0].toString().repeat(50) + symbols[1].toString().repeat(50),
             getAbracadabra(symbols, 100),
-            dictionary.filter { it.length <= 3 }.shuffled().take(20).joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
+            dictionary
+                .filter { it.length <= 3 }
+                .shuffled()
+                .take(20)
+                .joinToString(" ") { "${symbols[0]}${it}${symbols[1]}" }
         )
     }
 
