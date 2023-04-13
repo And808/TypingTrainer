@@ -129,7 +129,11 @@ class ExerciseRepository {
             "[]" -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
             "{}" -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
             ":" -> Exercise(name, repository.getSymbolsExercise(":", language))
+            ";" -> Exercise(name, repository.getSymbolsExercise(";", language))
             "!?" -> Exercise(name, repository.getSymbolsExercise("!?", language))
+            "-=" -> Exercise(name, repository.getSymbolsExercise("-=", language))
+            "_+" -> Exercise(name, repository.getSymbolsExercise("_+", language))
+            "<>" -> Exercise(name, repository.getPairedSymbolsExercise("<>", language))
             else -> Exercise("", emptyList())
         }
 
