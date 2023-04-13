@@ -4,8 +4,6 @@ import StringExt.randomSymbol
 
 class ExerciseRepository {
 
-    private val RIGHT_HAND_CAPITAL_LETTERS_RUS = RIGHT_HAND_LETTERS_RUS.filter { it != 'ы' }.uppercase()
-    private val LEFT_HAND_CAPITAL_LETTERS_RUS = LEFT_HAND_LETTERS_RUS.filter { it != 'ь' && it != 'ъ' }.uppercase()
     private val oneHundredDictionaryRus = readLines("src/main/kotlin/dictionaries/Соточка.txt")
     private val oneHundredDictionaryEn = readLines("src/main/kotlin/dictionaries/OneHundred.txt")
     private val dictionary5000Rus = readLines("src/main/kotlin/dictionaries/Частотный словарь 5000.txt")
@@ -77,7 +75,7 @@ class ExerciseRepository {
         return listOf(text.dropLast(1))
     }
 
-    fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
+    private fun getPairedSymbolsExercise(symbols: String, language: Language): List<String> {
         val dictionary = if (language === Language.RUS) dictionary5000Rus else dictionary5000En
         return listOf(
             symbols[0].toString().repeat(50) + symbols[1].toString().repeat(50),
@@ -136,6 +134,8 @@ class ExerciseRepository {
     companion object {
         private const val RIGHT_HAND_LETTERS_RUS = "йцукефывапячсми"
         private const val LEFT_HAND_LETTERS_RUS = "нгшщзхъролджэтьбю"
+        private const val RIGHT_HAND_CAPITAL_LETTERS_RUS = "ЙЦУКЕФВАПЯЧСМИ"
+        private const val LEFT_HAND_CAPITAL_LETTERS_RUS = "НГШЩЗХРОЛДЖЭТБЮ"
         private const val ALPHABET_RUS = LEFT_HAND_LETTERS_RUS + RIGHT_HAND_LETTERS_RUS
         private const val RIGHT_HAND_LETTERS_EN = "yuiophjklnm"
         private const val LEFT_HAND_LETTERS_EN = "qwertasdfgzxcvb"
