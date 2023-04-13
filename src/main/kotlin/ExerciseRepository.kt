@@ -88,6 +88,22 @@ class ExerciseRepository {
         )
     }
 
+    private fun getSymbolsExercise(symbols: String, language: Language): List<String> {
+        val dictionary = if (language === Language.RUS) dictionary5000Rus else dictionary5000En
+        val list = mutableListOf<String>()
+        symbols.forEach { char ->
+            list.add(getRepeatedString(char.toString()))
+            list.add(
+                dictionary
+                    .filter { it.length <= 3 }
+                    .shuffled()
+                    .take(20)
+                    .joinToString(" ") { "$it${char}" }
+            )
+        }
+        return list
+    }
+
     fun createExercise(type: ExerciseType) {
         val name = getExerciseName(type)
         val exercise = when (type) {
@@ -112,13 +128,23 @@ class ExerciseRepository {
             "()" -> Exercise(name, repository.getPairedSymbolsExercise("()", language))
             "[]" -> Exercise(name, repository.getPairedSymbolsExercise("[]", language))
             "{}" -> Exercise(name, repository.getPairedSymbolsExercise("{}", language))
+            ":" -> Exercise(name, repository.getSymbolsExercise(":", language))
+            "!?" -> Exercise(name, repository.getSymbolsExercise("!?", language))
             else -> Exercise("", emptyList())
         }
 
         exercise.list.forEachIndexed { index, content ->
-            val fileName = if (exercise.list.size > 1) "$name-$index" else name
+            val fileName = if (exercise.list.size > 1) "${getSymbolsName(name)}-$index" else getSymbolsName(name)
             FileManager.createFile(fileName, content)
             println(content)
+        }
+    }
+
+    private fun getSymbolsName(symbols: String): String {
+        return when (symbols) {
+            ":" -> if (language === Language.RUS) "Двоеточие" else "Colon"
+            "!?" -> if (language === Language.RUS) "Восклицательный и вопросительный знаки" else "Exclamation and question marks"
+            else -> ""
         }
     }
 
