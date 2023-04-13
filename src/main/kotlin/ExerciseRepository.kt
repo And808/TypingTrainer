@@ -81,7 +81,7 @@ class ExerciseRepository {
         val dictionary = if (language === Language.RUS) dictionary5000Rus else dictionary5000En
         return listOf(
             symbols[0].toString().repeat(50) + symbols[1].toString().repeat(50),
-            getAbracadabra(symbols, 100),
+            getRepeatedString(symbols, 100),
             dictionary
                 .filter { it.length <= 3 }
                 .shuffled()
