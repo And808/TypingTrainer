@@ -124,18 +124,6 @@ class ExerciseRepository {
         }
     }
 
-    fun createExerciseFromFile(name: String) {
-        val lines = readLines("src/main/kotlin/dictionaries/ExercisesRus.txt")
-        val list = lines.takeLastWhile { it != name }.takeWhile { it.length > 30 }
-        val exercise = Exercise(name, list)
-
-        list.forEachIndexed { index, content ->
-            val fileName = if (list.size > 1) "$name-$index" else name
-            FileManager.createFile(fileName, content)
-        }
-        println(exercise)
-    }
-
     private fun getExerciseName(type: ExerciseType): String {
         return when (type) {
             ExerciseType.ONE_HUNDRED -> if (language === Language.RUS) "Соточка" else "OneHundred"
