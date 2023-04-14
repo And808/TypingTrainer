@@ -1,6 +1,7 @@
 import FileManager.deleteAllFiles
 import FileManager.readLines
 import StringExt.randomSymbol
+import kotlin.random.Random
 
 class ExerciseRepository {
 
@@ -8,6 +9,19 @@ class ExerciseRepository {
     private val oneHundredDictionaryEn = readLines("src/main/kotlin/dictionaries/OneHundred.txt")
     private val dictionary5000Rus = readLines("src/main/kotlin/dictionaries/Частотный словарь 5000.txt")
     private val dictionary5000En = readLines("src/main/kotlin/dictionaries/Frequency dictionary 5000.txt")
+
+    private val mathSigns = Exercise(
+        "Математические знаки",
+        listOf(
+            ";[; ;-; ;[; ;-; ;[; ;-; jkl;-; jkl;-; jkl;-; j-j k-k l-l ;-; l-l k-k j-j f-f d-d s-s a-a s-s d-d f-f f-j d-k s-l a-;",
+            ";[; ;=; ;[; ;=; ;[; ;=; jkl;=; jkl;=; jkl;=; j=j k=k l=l ;=; l=l k=k j=j f=f d=d s=s a=a s=s d=d f=f f=j d=k s=l a=;",
+            ";[; ;_; ;[; ;_; ;[; ;_; jkl;_; jkl;_; jkl;_; j_j k_k l_l ;_; l_l k_k j_j f_f d_d s_s a_a s_s d_d f_f f_j d_k s_l a_;",
+            ";[; ;+; ;[; ;+; ;[; ;+; jkl;+; jkl;+; jkl;+; j+j k+k l+l ;+; l+l k+k j+j f+f d+d s+s a+a s+s d+d f+f f+j d+k s+l a+;",
+            getAbracadabra("-=_+"),
+            getMathSymbolsExercise(),
+            getPostfixSymbolExercise("_"),
+        )
+    )
 
     var language: Language = Language.RUS
 
@@ -104,6 +118,25 @@ class ExerciseRepository {
         return list
     }
 
+    private fun getMathSymbolsExercise(): String {
+        val symbols = "-=+"
+        var text = ""
+        while (text.length < 200) {
+            text += "${Random.nextInt(99)}${symbols.randomSymbol()}${Random.nextInt(99)} "
+        }
+
+        return text
+    }
+
+    private fun getPostfixSymbolExercise(symbol: String): String {
+        var text = ""
+        while (text.length < 200) {
+            text += "${oneHundredDictionaryEn.random()}${symbol}${oneHundredDictionaryEn.random()} "
+        }
+
+        return text
+    }
+
     fun createExercise(type: ExerciseType) {
         val name = getExerciseName(type)
         val exercise = when (type) {
@@ -134,6 +167,7 @@ class ExerciseRepository {
             "-=" -> Exercise(name, repository.getSymbolsExercise("-=", language))
             "_+" -> Exercise(name, repository.getSymbolsExercise("_+", language))
             "<>" -> Exercise(name, repository.getPairedSymbolsExercise("<>", language))
+            "-=_+" -> mathSigns
             else -> Exercise("", emptyList())
         }
 

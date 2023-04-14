@@ -11,4 +11,5 @@ fun main() {
     repository.language = Language.EN
     repository.createExercise(ExerciseType.ONE_HUNDRED)
     repository.createExercise(":")
+    repository.createExercise("-=_+")
 }
