@@ -180,9 +180,11 @@ class ExerciseRepository {
 
     private fun getSymbolsName(symbols: String): String {
         return when (symbols) {
-            ":" -> if (language === Language.RUS) "Двоеточие" else "Colon"
-            "!?" -> if (language === Language.RUS) "Восклицательный и вопросительный знаки" else "Exclamation and question marks"
-            else -> ""
+            ":" -> "Двоеточие($language)"
+            ";" -> "Точка с запятой($language)"
+            "!?" -> "Восклицательный и вопросительный знаки($language)"
+            "-=_+" -> "Арифметические символы($language)"
+            else -> "$symbols($language)"
         }
     }
 
